@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<title>ФинХелп© Валутен Калкулатор</title>
+	<link href="https://fonts.googleapis.com/css?family=Bellota+Text&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:300|Roboto+Condensed:300&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="{% static 'converter/style.css' %}">
+</head>
+<body>
+	<div id="root" class="row no-gutters">
+		<section id="left" class="col-9">
+			<form class="col-7 position-relative ml-5">
+				{% csrf_token %}
+				<label for="amount" class="row no-gutters col-12">Количество</label>
+				<input type="number" id="amount" class="row no-gutters col-12">
+
+				<label for="from" class="row no-gutters col-12">От</label>
+				<select id="from" class="row no-gutters col-12">
+					{% for currency in currencies %}
+						<option value="{{ currency.code }}">{{ currency.code }} {{ currency.name }}</option>
+					{% endfor %}
+					}
+				</select>
+				
+				<button id="flip" 
+						class="button position-absolute" 
+						title="Размени местата">
+					<i class="fas fa-exchange-alt"></i>
+				</button>
+
+				<label for="to" class="row no-gutters col-12">Към</label>
+				<select id="to" class="row no-gutters col-12">
+					{% for currency in currencies %}
+						<option value="{{ currency.code }}">
+							{{ currency.code }} {{ currency.name }}
+						</option>
+					{% endfor %}
+				</select>
+
+				<input type="submit" 
+					   value="КАЛКУЛИРАЙ СЕГА" 
+					   class="button col-12">
+			</form>
+		</section>
+
+		<section id="right" class="row col-3 align-items-end justify-content-end text-white-50">
+			<div id="bg" class="position-absolute"></div>
+			<button id="refresh-rates" 
+					class="button position-relative"
+					title="Опресни Валутните Курсове">
+				<i class="fas fa-sync-alt"></i>
+			</button>
+			<div id="info" class="row no-gutters col-12 position-relative">
+				<div class="data row col-12 no-gutters position-relative mb-5">
+					<div class="big from col-12 text-right">$100</div>
+					<div class="col-12 text-right">Щатски долар</div>
+				</div>
+				<div class="data row col-12 no-gutters position-relative mb-5">
+					<div class="big to col-12 text-right">&euro;89.88</div>
+					<div class="col-12 text-right">Евро</div>
+				</div>
+				<div class="data rate col-12 no-gutters position-relative text-right">
+					1 Щатски долар ($) = 0.90 Евро (&euro;)
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
+</body>
+</html>
