@@ -1,0 +1,88 @@
+:root {
+	--orange: rgba(221,94,46,1);
+	--pink: rgb(231, 50, 92);
+}
+
+body {
+	overflow: hidden;
+	font-family: 'Nunito', cursive;
+}
+
+#root {
+	height: 100vh;
+}
+
+#info-box {
+	top: 15px;
+	left: 0;
+	max-width: 30%;
+	border-radius: 0 50px 50px 0;
+	box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.2);
+	transition: 350ms;
+}
+
+#info-box.hidden {
+	left: -500px;
+	opacity: 0;
+}
+
+#info-box .text-area {
+	text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+	max-width: 85%;
+}
+
+#info-box i {
+	right: 25px;
+	top: 42%;
+	cursor: pointer;
+	color: rgba(0, 0, 0, 0.5);
+	transition: 250ms;
+}
+
+#info-box i:hover {
+	color: orange;
+}
+
+#info-box i:active {
+	color: red;
+}
+
+.bg-dark {
+	background: rgb(29,29,29);
+	background: linear-gradient(90deg, rgba(29,29,29,1) 0%, rgba(52,52,52,1) 100%);
+}
+
+.bg-blue {
+	background: rgb(46,158,235);
+	background: linear-gradient(90deg, rgba(46,158,235,1) 0%, rgba(67,176,255,1) 100%);
+}
+
+.bg-red {
+	background: rgb(254,0,0);
+	background: linear-gradient(90deg, rgba(254,0,0,1) 0%, rgba(255,63,63,1) 100%);
+}
+
+.big {
+	font-size: 350% !important;
+}
+
+.from, .rate {
+	color: var(--orange);
+}
+
+.to {
+	color: var(--pink);
+}
+
+.button {
+	background-color: #000;
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	transition: 250ms;
+}
+
+.button:active {
+	background: #fff !important;
+	color: rgba(0, 0, 0, 0.5) !important;
+}

@@ -1,0 +1,46 @@
+#left {
+	background: rgb(221,94,46);
+	background: linear-gradient(145deg, rgba(221,94,46,1) 0%, rgb(231, 50, 92) 100%);
+}
+
+#left form {
+	top: 15%;
+}
+
+#left form input, 
+#left form button#convert, 
+#left form select {
+	border-radius: 25px;
+	border: none;
+	padding: 10px 20px;
+	font-size: 120%;
+}
+
+#left form label {
+	font-weight: 800;
+	margin-top: 20px;
+}
+
+#left form input:focus, 
+#left form select:focus, 
+.button:focus {
+	outline: none;
+}
+
+#left form button#convert {
+	font-weight: 200;
+	margin-top: 50px;
+	color: rgba(255, 255, 255, 0.9);
+}
+
+#left form button#flip {
+	top: 48%;
+	right: -40px;
+	border-radius: 50%;
+	width: 45px;
+	height: 45px;
+}
+
+#left form button#flip i {
+	transform: rotateZ(90deg);
+}
