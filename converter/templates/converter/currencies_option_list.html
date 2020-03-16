@@ -1,0 +1,8 @@
+{% for currency in currencies %}
+	<option value="{{ currency.code }}" 
+			{% if currency.code == selected.code %} 
+				selected 
+			{% endif %}>
+		{{ currency.code }} {{ currency.name }}
+	</option>
+{% endfor %}

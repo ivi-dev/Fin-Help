@@ -1,0 +1,36 @@
+<div id="info" class="row no-gutters col-12 position-relative">
+	<div class="data row col-12 no-gutters position-relative mb-5">
+		<div class="big from col-12 text-right">
+			{{ from_currency.symbol }} <span id="amount-value">{{ amount }}</span>
+		</div>
+		<div class="col-12 text-right">
+			<span class="from-name">{{ from_currency.name }}</span>
+		</div>
+	</div>
+	<div class="data row col-12 no-gutters position-relative mb-5">
+		<div class="big to col-12 text-right">
+			{{ to_currency.symbol }} <span id="conversion-result-value">{{ conversion_result }}</span>
+		</div>
+		<div class="col-12 text-right">
+			<span class="to-name">
+				{{ to_currency.name }}
+			</span>
+		</div>
+	</div>
+	<div class="data rate col-12 no-gutters position-relative text-right">
+		{{ amount }}
+		<span class="from-name">
+			{{ from_currency.name }}
+		</span> 
+		(<span class="from-symbol">
+			{{ from_currency.symbol }}
+		</span>) = 
+		<span class="rate-value">{{ rate }}</span>
+		<span class="to-name">
+			{{ to_currency.name }}
+		</span>
+		(<span class="to-symbol">
+			{{ to_currency.symbol }}
+		</span>)
+	</div>
+</div>
