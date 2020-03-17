@@ -1,47 +1,14 @@
-<!DOCTYPE html>
-{% load static %}
-<html>
-<head>
-	<title>ФинХелп© Валутен Калкулатор</title>
-	<link href="https://fonts.googleapis.com/css?family=Bellota+Text&display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300&display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Nunito:300|Roboto+Condensed:300&display=swap" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
-	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="{% static 'converter/css/main.css' %}">
-</head>
-<body>
-	<div id="root" class="row no-gutters">
-		<section id="left" class="col-9">
-			{% include './convert_form.html' %}
-		</section>
-		<section id="right" 
-				 class="row col-3 align-items-end justify-content-end text-white-50">
-			{% include './background.html' %}
-			{% include './refresh_rates_button.html' %}
-			{% include './info.html' %}
-		</section>
-	</div>
+{% extends './base.html' %}
 
-	<div id="info-box"
-		 class="row no-gutters position-fixed bg-light align-items-center hidden">
-	 	<div class="text-area bg-blue text-light p-4"></div>
-	 	<i class="hide far fa-circle position-absolute"></i>
-	 </div>
-
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
-		  	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-		  	crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" 
-			integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" 
-			crossorigin="anonymous"></script>
-	<script type="text/javascript" 
-			src="{% static 'converter/js/exceptions/InvalidElementError.js' %}"></script>
-	<script type="text/javascript" 
-			src="{% static 'converter/js/exceptions/IncompleteConversionDataError.js' %}"></script>	
-	<script type="text/javascript" 
-			src="{% static 'converter/js/common.js' %}"></script>
-	<script type="text/javascript" 
-			src="{% static 'converter/js/main.js' %}"></script>
-</body>
-</html>
+{% block content %}
+<section id="left" class="col-9">
+	{% include './partials/convert_form.html' %}
+</section>
+<section id="right" 
+		 class="row col-3 align-items-end justify-content-end text-white-50">
+	{% include './partials/background.html' %}
+	{% include './partials/refresh_rates_button.html' %}
+	{% include './partials/info.html' %}
+	{% include './partials/alert_box.html' %}
+</section>
+{% endblock %}
