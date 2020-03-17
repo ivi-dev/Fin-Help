@@ -1,14 +1,14 @@
 $.when( $.ready ).then(function() {
-	$('#convert-form button#convert').on('click', function() {
+	CONVERT_FORM.children('button#convert').on('click', function() {
 		hideAlert();
-		const amount = getValue($('#convert-form #amount'));
+		const amount = getValue(CONVERT_FORM.children(AMOUNT_FIELD_SELECTOR));
 		if (amount != 0) {
 			const button = $(this), 
 			title = getValue(button);
 			setValue(button, 'КАЛКУЛИРАМ...');
 			button.attr('disabled', true);
 			try {
-				convert($('#convert-form'))
+				convert($(CONVERT_FORM))
 				.done(function(data) {
 					usePostConversionData(data);
 				}).fail(function(request) {
@@ -27,7 +27,7 @@ $.when( $.ready ).then(function() {
 				button.removeAttr('disabled');
 			}
 		} else {
-			if (amount == '0') {
+			if (amount == 0) {
 				alert('Изберете стойност за калкулация, различна от нула.');
 			} else {
 				alert('Не оставяйте полето за количество празно.');
@@ -35,7 +35,14 @@ $.when( $.ready ).then(function() {
 		}
 	});
 
-	$('#info-box .hide').on('click', function() {
+	CONVERT_FORM.children('button#flip').on('click', function() {
+		const fromValue = getValue(CONVERT_FORM.children(FROM_FIELD_SELECTOR));
+		setValue(CONVERT_FORM.children(FROM_FIELD_SELECTOR), 
+			getValue(CONVERT_FORM.children(TO_FIELD_SELECTOR)));
+		setValue(CONVERT_FORM.children(TO_FIELD_SELECTOR), fromValue);
+	});
+
+	ALERT_BOX.children('.hide').on('click', function() {
 		$(this).parent().addClass('hidden');
 	});
 });
