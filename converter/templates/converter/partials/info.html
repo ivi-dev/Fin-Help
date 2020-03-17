@@ -1,7 +1,8 @@
 <div id="info" class="row no-gutters col-12 position-relative">
 	<div class="data row col-12 no-gutters position-relative mb-5">
 		<div class="big from col-12 text-right">
-			{{ from_currency.symbol }} <span id="amount-value">{{ amount }}</span>
+			<span class="from-symbol">{{ from_currency.symbol }} </span>
+			<span id="amount-value">{{ amount }}</span>
 		</div>
 		<div class="col-12 text-right">
 			<span class="from-name">{{ from_currency.name }}</span>
@@ -9,7 +10,10 @@
 	</div>
 	<div class="data row col-12 no-gutters position-relative mb-5">
 		<div class="big to col-12 text-right">
-			{{ to_currency.symbol }} <span id="conversion-result-value">{{ conversion_result }}</span>
+			<span class="to-symbol">{{ to_currency.symbol }} </span>
+				<span id="conversion-result-value">
+					{{ conversion_result }}
+				</span>
 		</div>
 		<div class="col-12 text-right">
 			<span class="to-name">
@@ -33,9 +37,11 @@
 			{{ to_currency.symbol }}
 		</span>)
 	</div>
-	<div id="latest-rates-update"
-		 class="data col-12 position-relative text-right pt-2">
-	 	<span class="small faded">Валутнa информация от:<br>
-	 	17 Март 2020 09:45:50</span>
+	<div id="latest-rates-info"
+		 class="data col-12 position-relative text-right pt-5">
+	 	<span class="small text-reset faded">
+	 		Използват се курсове на БНБ от:<br>
+	 		{{ latest_rate_update|date:'l F m Y H:i:s' }}
+	 	</span>
 	</div>
 </div>
