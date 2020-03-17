@@ -1,4 +1,5 @@
 from decimal import Decimal
+import datetime
 
 from django.db import models
 
@@ -9,6 +10,7 @@ class Currency(models.Model):
 	per = models.IntegerField(default=1)
 	rate = models.DecimalField(max_digits=10, decimal_places=5)
 	date_added = models.DateTimeField(auto_now_add=True)
+	latest_rate_update = models.DateTimeField(default=datetime.datetime.today())
 
 	def __str__(self):
 		return self.name
