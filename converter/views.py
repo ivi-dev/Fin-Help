@@ -12,7 +12,8 @@ def index(request):
 		'amount': 1,
 		'from_currency': currencies[0],
 		'to_currency': currencies[0],
-		'rate': currencies[0].get_rate_to(currencies[0].code, precision=2),
+		'rate': currencies[0].get_rate_to(currencies[0].code, 
+							              precision=2),
 		'latest_rate_update': currencies[0].latest_rate_update,
 		'conversion_result': 1
 	}
@@ -34,5 +35,7 @@ def convert(request):
 							        	'rate': str(rate),
 							        	'to_currency_name': to_currency.name,
 							        	'to_currency_symbol': to_currency.symbol
-							        }
-							      }))
+							        }}))
+
+def update_rates(request):
+	
