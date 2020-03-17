@@ -13,14 +13,10 @@ def index(request):
 		'from_currency': currencies[0],
 		'to_currency': currencies[0],
 		'rate': currencies[0].get_rate_to(currencies[0].code),
+		'latest_rate_update': currencies[0].latest_rate_update,
 		'conversion_result': 1
 	}
 	return render(request, 'converter/index.html', context)
-
-def currencies(request):
-	currencies = Currency.objects.all()
-	context = {'currencies': currencies}
-	return render(request, 'converter/currencies.html', context)
 
 def convert(request):
 	amount = request.GET['amount']
@@ -30,7 +26,7 @@ def convert(request):
 	to_currency = Currency.objects.get(code=to_code)
 	rate = from_currency.get_rate_to(to_code)
 
-	result = from_currency.convert_to(to_code, amount)
+	result = from_currency.convert_to(to_code, amount, precision=2)
 	return HttpResponse(json.dumps({'result': str(result), 
 							        'rate_info': {
 							        	'from_currency_name': from_currency.name,
