@@ -12,7 +12,7 @@ def index(request):
 		'amount': 1,
 		'from_currency': currencies[0],
 		'to_currency': currencies[0],
-		'rate': currencies[0].get_rate_to(currencies[0].code),
+		'rate': currencies[0].get_rate_to(currencies[0].code, precision=2),
 		'latest_rate_update': currencies[0].latest_rate_update,
 		'conversion_result': 1
 	}
