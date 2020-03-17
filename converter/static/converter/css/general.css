@@ -47,11 +47,6 @@ body {
 	color: red;
 }
 
-.bg-dark {
-	background: rgb(29,29,29);
-	background: linear-gradient(90deg, rgba(29,29,29,1) 0%, rgba(52,52,52,1) 100%);
-}
-
 .bg-blue {
 	background: rgb(46,158,235);
 	background: linear-gradient(90deg, rgba(46,158,235,1) 0%, rgba(67,176,255,1) 100%);
@@ -93,4 +88,23 @@ body {
 .button:active {
 	background: #fff !important;
 	color: rgba(0, 0, 0, 0.5) !important;
+}
+
+#currencies-list {
+	top: 15%;
+	right: 40%;
+	max-height: 400px !important;
+	width: 40%;
+	transform: skewX(0deg);
+	transition: 500ms;
+}
+
+#currencies-list table thead tr th {
+	vertical-align: middle;
+	position: sticky !important;
+}
+
+#currencies-list.hidden {
+	transform: skewX(-60deg);
+	right: -400px;
 }
