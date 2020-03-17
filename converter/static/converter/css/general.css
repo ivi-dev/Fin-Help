@@ -12,7 +12,7 @@ body {
 	height: 100vh;
 }
 
-#info-box {
+#alert-box {
 	top: 15px;
 	left: 0;
 	max-width: 30%;
@@ -21,17 +21,17 @@ body {
 	transition: 350ms;
 }
 
-#info-box.hidden {
+#alert-box.hidden {
 	left: -500px;
 	opacity: 0;
 }
 
-#info-box .text-area {
+#alert-box .text-area {
 	text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
 	max-width: 85%;
 }
 
-#info-box i {
+#alert-box i {
 	right: 25px;
 	top: 42%;
 	cursor: pointer;
@@ -39,11 +39,11 @@ body {
 	transition: 250ms;
 }
 
-#info-box i:hover {
+#alert-box i:hover {
 	color: orange;
 }
 
-#info-box i:active {
+#alert-box i:active {
 	color: red;
 }
 
@@ -64,6 +64,14 @@ body {
 
 .big {
 	font-size: 350% !important;
+}
+
+.small {
+	font-size: 80% !important;
+}
+
+.faded {
+	opacity: 0.4;
 }
 
 .from, .rate {
