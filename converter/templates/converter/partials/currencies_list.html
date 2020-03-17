@@ -1,0 +1,21 @@
+<div id="currencies-list"
+	 class="position-fixed bg-white text-dark rounded shadow small overflow-auto hidden">
+	<table class="table table-striped m-0">
+		<thead>
+			<tr>
+				<th scope="col" class="text-center bg-info text-white">Наименование</th>
+				<th scope="col" class="text-center bg-info text-white">Код</th>
+				<th scope="col" class="text-center bg-info text-white">Лева<br>(BGN)</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for currency in currencies %}
+				<tr>
+					<td>{{ currency.name }}</td>
+					<td class="text-center">{{ currency.code }}</td>
+					<td class="text-center">{{ currency.rate }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
