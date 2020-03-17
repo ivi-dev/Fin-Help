@@ -17,6 +17,11 @@ def index(request):
 	}
 	return render(request, 'converter/index.html', context)
 
+def currencies(request):
+	currencies = Currency.objects.all()
+	context = {'currencies': currencies}
+	return render(request, 'converter/currencies.html', context)
+
 def convert(request):
 	amount = request.GET['amount']
 	from_code = request.GET['from']
