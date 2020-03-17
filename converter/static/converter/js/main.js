@@ -45,4 +45,9 @@ $.when( $.ready ).then(function() {
 	ALERT_BOX.children('.hide').on('click', function() {
 		$(this).parent().addClass('hidden');
 	});
+
+	VIEW_CURRENCIES_BUTTON.on('click', function() {
+		CURRENCIES_LIST.toggleClass('hidden');
+		$(this).children('i').toggleClass('fa-times');
+	});
 });

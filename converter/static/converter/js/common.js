@@ -3,6 +3,8 @@ const CONVERT_FORM = $('#convert-form');
 const AMOUNT_FIELD_SELECTOR = '#amount';
 const FROM_FIELD_SELECTOR = '#from';
 const TO_FIELD_SELECTOR = '#to';
+const VIEW_CURRENCIES_BUTTON = $('#view-currencies');
+const CURRENCIES_LIST = $('#currencies-list');
 
 function getValue(element) {
 	let elementName;
