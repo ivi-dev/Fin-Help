@@ -5,7 +5,7 @@
 }
 
 #right #info {
-	padding: 0 80px 80px 0 !important;
+	padding: 0 80px 60px 0 !important;
 }
 
 #right #info .data {
@@ -39,4 +39,8 @@
 	color: #fff;
 	font-size: 400%;
 	margin: -80px 80px 0 auto;
+}
+
+#right #info #latest-rates-update {
+	line-height: 1.1;
 }
