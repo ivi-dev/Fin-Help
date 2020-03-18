@@ -46,12 +46,4 @@ $.when( $.ready ).then(function() {
 		CURRENCIES_LIST.toggleClass('hidden');
 		$(this).children('i').toggleClass('fa-times');
 	});
-
-	// updateRates()
-	// .done(function(data) {
-	// 	console.log(data)
-	// }).fail(function() {
-	// 	alert('Въникна грешка при опита за актуализация ' +
-	// 		  'на валутните курсове.');
-	// });
 });
