@@ -106,5 +106,5 @@ body {
 
 #currencies-list.hidden {
 	transform: skewX(-60deg);
-	right: -400px;
+	right: -500px;
 }
