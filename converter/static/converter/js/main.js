@@ -3,19 +3,16 @@ $.when( $.ready ).then(function() {
 		hideAlert();
 		const amount = getValue(CONVERT_FORM.children(AMOUNT_FIELD_SELECTOR));
 		if (amount != 0) {
-			const button = $(this), 
-			title = getValue(button);
-			setValue(button, 'КАЛКУЛИРАМ...');
-			button.attr('disabled', true);
+			const button = $(this), title = getValue(button);
+			deactivateButton(button, 'КАЛКУЛИРАМ...');
 			try {
 				convert($(CONVERT_FORM))
-				.done(function(data) {
+				  .done(function(data) {
 					usePostConversionData(data);
 				}).fail(function(request) {
 					handleNetworkError(request.status);
 				}).always(function() {
-					setValue(button, title);
-					button.removeAttr('disabled');
+					activateButton(button, title);
 				});
 			} catch (e) {
 				if (e instanceof IncompleteConversionDataError) {
@@ -23,14 +20,13 @@ $.when( $.ready ).then(function() {
 						  'липсват някои неодходими данни за нея.');
 				}
 			} finally {
-				setValue(button, title);
-				button.removeAttr('disabled');
+				activateButton(button, title);
 			}
 		} else {
 			if (amount == 0) {
-				alert('Изберете стойност за калкулация, различна от нула.');
+				alert('Изберете сума, различна от нула.');
 			} else {
-				alert('Не оставяйте полето за количество празно.');
+				alert('Не оставяйте полето "Сума" празно.');
 			}
 		}
 	});
@@ -50,4 +46,12 @@ $.when( $.ready ).then(function() {
 		CURRENCIES_LIST.toggleClass('hidden');
 		$(this).children('i').toggleClass('fa-times');
 	});
+
+	// updateRates()
+	// .done(function(data) {
+	// 	console.log(data)
+	// }).fail(function() {
+	// 	alert('Въникна грешка при опита за актуализация ' +
+	// 		  'на валутните курсове.');
+	// });
 });

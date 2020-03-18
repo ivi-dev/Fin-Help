@@ -5,6 +5,7 @@ const FROM_FIELD_SELECTOR = '#from';
 const TO_FIELD_SELECTOR = '#to';
 const VIEW_CURRENCIES_BUTTON = $('#view-currencies');
 const CURRENCIES_LIST = $('#currencies-list');
+const RATES_URL = 'https://www.bnb.bg/Statistics/StExternalSector/StExchangeRates/StERForeignCurrencies/index.htm';
 
 function getValue(element) {
 	let elementName;
@@ -127,6 +128,10 @@ function convert(form) {
 	});
 }
 
+function updateRates() {
+	return $.ajax('update-currencies/');
+}
+
 function alert(text) {
 	ALERT_BOX.children('.text-area').text(text);
 	ALERT_BOX.removeClass('hidden');
@@ -137,7 +142,10 @@ function hideAlert() {
 }
 
 function usePostConversionData(data) {
-	setValue($('#info #conversion-result-value'), data.result);
+	setValue($('#info #conversion-result-value'), 
+			 data.result);
+	setValue($('#info #amount-value'), 
+			 data.rate_info.amount);
 	setValue($('#info .from-name'), 
 			 data.rate_info.from_currency_name);
 	setValue($('#info .from-symbol'), 
@@ -162,4 +170,14 @@ function handleNetworkError(status) {
 		alert('Възникна грешка при опита ' +
 		      'за калкулация.');
 	}
+}
+
+function activateButton(button, title) {
+	setValue(button, title);
+	button.removeAttr('disabled');
+}
+
+function deactivateButton(button, title) {
+	setValue(button, title);
+	button.attr('disabled', true);
 }

@@ -2,7 +2,9 @@
 	<div class="data row col-12 no-gutters position-relative mb-5">
 		<div class="big from col-12 text-right">
 			<span class="from-symbol">{{ from_currency.symbol }} </span>
-			<span id="amount-value">{{ amount }}</span>
+			<span id="amount-value">
+				{{ amount }}
+			</span>
 		</div>
 		<div class="col-12 text-right">
 			<span class="from-name">{{ from_currency.name }}</span>
@@ -40,8 +42,10 @@
 	<div id="latest-rates-info"
 		 class="data col-12 position-relative text-right pt-5">
 	 	<span class="small text-reset faded">
-	 		Използват се курсове на БНБ от:<br>
-	 		{{ latest_rate_update|date:'l F m Y H:i:s' }}
+	 		Използват се курсове на БНБ от<br>
+	 		<span id="latest-rates-date">
+	 			{{ latest_rate_update|date:'l d F Y' }}
+	 		</span>
 	 	</span>
 	</div>
 </div>
