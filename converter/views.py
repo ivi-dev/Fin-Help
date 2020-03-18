@@ -1,10 +1,11 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, JsonResponse
 import json
 import datetime
 
 from .models import Currency
-from .general import qs_find
+from .utility.general import qs_find
+from .utility.currency import update_currency_data
 
 
 def index(request):
@@ -33,18 +34,17 @@ def convert(request):
 	rate = from_currency.get_rate_to(to_code)
 
 	result = from_currency.convert_to(to_code, amount, precision=2)
-	return HttpResponse(json.dumps({'result': str(result), 
-							        'rate_info': {
-							        	'amount': amount,
-							        	'from_currency_name': from_currency.name,
-							        	'from_currency_symbol': from_currency.symbol,
-							        	'rate': str(rate),
-							        	'to_currency_name': to_currency.name,
-							        	'to_currency_symbol': to_currency.symbol
-							        }}))
+	return JsonResponse({'result': str(result), 
+				         'rate_info': {
+				         	'amount': amount,
+				         	'from_currency_name': from_currency.name,
+				         	'from_currency_symbol': from_currency.symbol,
+				         	'rate': str(rate),
+				         	'to_currency_name': to_currency.name,
+				         	'to_currency_symbol': to_currency.symbol
+				        }})
 
 def update_currencies(request):
 	existing = Currency.objects.all()
-	Currency.update_currencies(existing)
-	
-	return HttpResponse('')
+	update_currency_data(existing)
+	return redirect('admin-currencies-list')
