@@ -6,35 +6,50 @@ from django.db import models
 class Currency(models.Model):
 	name = models.CharField(max_length=100)
 	code = models.CharField(max_length=3)
-	symbol = models.CharField(max_length=10)
+	symbol = models.CharField(max_length=5, default='')
 	per = models.IntegerField(default=1)
 	rate = models.DecimalField(max_digits=10, decimal_places=5)
-	date_added = models.DateTimeField(auto_now_add=True)
+	date_added = models.DateTimeField(default=datetime.datetime.today())
 	latest_rate_update = models.DateTimeField(default=datetime.datetime.today())
 
 	def __str__(self):
-		return self.name
+		return f'{self.name} {self.code} {self.per} {self.rate}'
 
 	def get_rate_to(self, code, precision=5):
-		target_currency = Currency.objects.get(code=code)
-		to_base = self.rate * 1 \
-				  if self.rate > 1 \
-				  else self.rate / 1
-		result = to_base / target_currency.rate \
-				 if target_currency.rate > 1 \
-				 else to_base * target_currency.rate
+		currency = Currency.objects.only('per', 'rate') \
+								   .get(code=code)
+		result = self._convert(1, to=currency)
 		return round(result, precision)
 
 	def convert_to(self, code, amount, precision=5):
-		amount_ = Decimal(amount)
-		target_currency = Currency.objects.get(code=code)
-		to_base = self.rate * amount_ \
-				  if self.rate > 1 \
-				  else self.rate / amount_
-		result = to_base / target_currency.rate \
-				 if target_currency.rate > 1 \
-				 else to_base * target_currency.rate
+		currency = Currency.objects.only('per', 'rate') \
+							       .get(code=code)
+		result = self._convert(amount, to=currency)
 		return round(result, precision)
+
+	def _convert(self, amount, to):
+		base = self._to_base(Decimal(amount))
+		rate = self._get_rate(to)
+		result = base / rate \
+				 if to.rate > 1 \
+				 else base * rate
+		return result
+
+	def _to_base(self, amount):
+		rate = self.rate \
+			   if self.per == 1 \
+			   else self.rate / self.per
+		result = rate * amount \
+			     if self.rate > 1 \
+			     else rate / amount
+		return result
+
+	def _get_rate(self, currency):
+		result = currency.rate \
+			     if currency.per == 1 \
+			     else currency.rate / \
+					  currency.per
+		return result
 
 	class Meta:
 		verbose_name_plural = "currencies"
