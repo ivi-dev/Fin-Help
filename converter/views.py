@@ -4,9 +4,7 @@ import json
 import datetime
 
 from .models import Currency
-from .general import get_currency_data, \
-					 process_currency_data, \
-					 qs_find
+from .general import qs_find
 
 
 def index(request):
@@ -19,6 +17,7 @@ def index(request):
 		'from_currency': from_currency,
 		'to_currency': to_currency,
 		'rate': from_currency.get_rate_to(from_currency.code, 
+									      list_=currencies,
 							              precision=2),
 		'latest_rate_update': from_currency.latest_rate_update,
 		'conversion_result': 1
@@ -45,11 +44,7 @@ def convert(request):
 							        }}))
 
 def update_currencies(request):
-	data = get_currency_data()
 	existing = Currency.objects.all()
-	new, updated = process_currency_data(data, existing)
-
-	Currency.objects.bulk_update(updated, ['name', 'code', 'per', 'rate'])
-	Currency.objects.bulk_create(new)
-
+	Currency.update_currencies(existing)
+	
 	return HttpResponse('')
