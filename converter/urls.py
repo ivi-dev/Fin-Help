@@ -5,5 +5,6 @@ from . import views
 app_name = 'converter'
 urlpatterns = [
     path('', views.index, name='index'),
-    path('convert/', views.convert, name='convert')
+    path('convert/', views.convert, name='convert'),
+    path('update-currencies/', views.update_currencies, name='update_currencies')
 ]
