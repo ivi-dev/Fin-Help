@@ -20,7 +20,7 @@ def index(request):
 		'rate': from_currency.get_rate_to(from_currency.code, 
 									      list_=currencies,
 							              precision=5),
-		'latest_rate_update': from_currency.latest_rate_update,
+		'date_valid': from_currency.date_valid,
 		'conversion_result': 1
 	}
 	return render(request, 'converter/index.html', context)
