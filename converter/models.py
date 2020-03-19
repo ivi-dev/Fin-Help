@@ -11,11 +11,10 @@ class Currency(models.Model):
 	symbol = models.CharField(max_length=5, default='')
 	per = models.IntegerField(default=1)
 	rate = models.DecimalField(max_digits=10, decimal_places=5)
-	date_added = models.DateTimeField(default=datetime.datetime.today())
-	latest_rate_update = models.DateTimeField(default=datetime.datetime.today())
+	date_valid = models.DateField(default=datetime.date.today())
 
 	def __str__(self):
-		return f'{self.name} [{self.code}] | За: {self.per} | Курс към лев: {self.rate}'
+		return f'{self.name} [{self.code}] | За единица валута: {self.per} | Курс към лев: {self.rate}'
 
 	def get_rate_to(self, code, list_=None, precision=5):
 		currency = None
