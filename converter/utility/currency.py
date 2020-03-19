@@ -17,10 +17,7 @@ def update_currency_data(existing):
 	raw = get_raw_data()
 	data = extract_currency_data(raw)
 	data_list = CurrencyDataList(data)
-	new, updated = process_currency_data(data_list, existing)
-
-	Currency.objects.bulk_update(updated, ['name', 'code', 'per', 'rate'])
-	Currency.objects.bulk_create(new)
+	return process_currency_data(data_list, existing)
 
 def get_raw_data():
 	response = requests.get(RAW_DATA_URL)
@@ -50,10 +47,22 @@ def get_validity_date(string):
 	return datetime.date(int(split[2]), int(split[1]), int(split[0]))
 
 def process_currency_data(data_list, existing):
-	new, updated = [], []
-	codes = [currency.code for currency in list(existing)]
+	new, update, removed = make_lists(data_list, existing)
+
+	Currency.objects.bulk_create(new)
+	Currency.objects.bulk_update(update, ['name', 'code', 'per', 'rate'])
+	for code in removed:
+		Currency.objects.get(code=code).delete()
+
+	return {'added': len(new), 
+			'updated': len(update), 
+			'removed': len(removed)}
+
+def make_lists(data_list, existing):
+	new, updated, to_be_removed = [], [], []
+	existing_codes = [currency.code for currency in list(existing)]
 	for item in data_list:
-		if item.code in codes:
+		if item.code in existing_codes:
 			currency = qs_find(existing, 
 						       ('code', item.code))
 			currency.name = item.name
@@ -69,8 +78,11 @@ def process_currency_data(data_list, existing):
 							    rate=item.rate,
 							    date_valid=item.date_valid)
 			new.append(currency)
-	return (new, updated)
+	for code in existing_codes:
+		if code not in data_list.codes:
+			to_be_removed.append(code)
 
+	return (new, updated, to_be_removed)
 
 class CurrencyData:
 	def __init__(self, name, code, per, rate, date_valid):
@@ -83,14 +95,14 @@ class CurrencyData:
 class CurrencyDataList:
 	def __init__(self, _list):
 		self._list = _list
-		# self._codes = self._collect_codes()
+		self.codes = self._collect_codes()
 		self._index = 0
 
-	# def _collect_codes(self):
-	# 	codes = []
-	# 	for currency in self._list:
-	# 		codes.append(currency.code)
-	# 	return codes
+	def _collect_codes(self):
+		codes = []
+		for currency in self._list:
+			codes.append(currency.code)
+		return codes
 
 	def __iter__(self):
 		return iter(self._list)
