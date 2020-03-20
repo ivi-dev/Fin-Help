@@ -19,7 +19,7 @@ def index(request):
 		'to_currency': to_currency,
 		'rate': from_currency.get_rate_to(from_currency.code, 
 									      list_=currencies,
-							              precision=5),
+							              precision=Currency.precision),
 		'date_valid': from_currency.date_valid,
 		'conversion_result': 1
 	}
@@ -34,6 +34,7 @@ def convert(request):
 	rate = from_currency.get_rate_to(to_code)
 
 	result = from_currency.convert_to(to_code, amount, precision=5)
+
 	return JsonResponse({'result': str(result), 
 				         'rate_info': {
 				         	'amount': amount,
@@ -44,10 +45,12 @@ def convert(request):
 				         	'to_currency_symbol': to_currency.symbol
 				        }})
 
-def view_admin_currencies_list(request):
+def admin_currencies_list(request):
 	return HttpResponse()
 
 def update_currencies(request):
 	existing = Currency.objects.all()
-	update_currency_data(existing)
-	return redirect('converter:admin-currencies-list')
+	result = update_currency_data(existing)
+	return redirect('converter:admin-currencies-list', new=result['added'], 
+													   updated=result['updated'], 
+												       removed=result['removed'])
