@@ -11,6 +11,7 @@ from .utility.general import qs_find
 
 class Currency(models.Model):
 	precision = 5
+	base_code = 'BGN'
 	
 	name = models.CharField(max_length=100)
 	code = models.CharField(max_length=3)
@@ -22,7 +23,7 @@ class Currency(models.Model):
 	date_valid = models.DateField(default=now)
 
 	def __str__(self):
-		return f'{self.name} [{self.code}] | За единица валута: {self.per} | Курс към лев: {self.rate}'
+		return f'[{self.code}] {self.name} | За единица валута: {self.per} | Курс към лев: {self.rate}'
 
 	def get_rate_to(self, 
 				    code: str, 
@@ -75,3 +76,4 @@ class Currency(models.Model):
 
 	class Meta:
 		verbose_name_plural = "currencies"
+		ordering =['code']
