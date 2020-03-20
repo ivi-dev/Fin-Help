@@ -26,7 +26,7 @@ class CurrencyTest(TestCase):
 	def test_currency_gets_printed_out_correctly(self):
 		currency = create_currency()
 		string = str(currency)
-		self.assertEqual(string, f'{currency.name} [{currency.code}] | За единица валута: {currency.per} | Курс към лев: {currency.rate}')
+		self.assertEqual(string, f'[{currency.code}] {currency.name} | За единица валута: {currency.per} | Курс към лев: {currency.rate}')
 		currency.delete()
 
 	def test_currency_gets_the_rate_to_another_currency_with_default_precision(self):
