@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse
 import json
 import datetime
 
@@ -8,7 +8,7 @@ from .utility.general import qs_find
 from .utility.currency import update_currency_data
 
 
-def index(request):
+def index(request: HttpRequest):
 	currencies = Currency.objects.all()
 	from_currency = currencies.first()
 	to_currency = from_currency
@@ -25,7 +25,7 @@ def index(request):
 	}
 	return render(request, 'converter/index.html', context)
 
-def convert(request):
+def convert(request: HttpRequest):
 	amount = request.GET['amount']
 	from_code = request.GET['from']
 	from_currency = Currency.objects.get(code=from_code)
@@ -45,12 +45,10 @@ def convert(request):
 				         	'to_currency_symbol': to_currency.symbol
 				        }})
 
-def admin_currencies_list(request):
+def admin_currencies_list(request: HttpRequest):
 	return HttpResponse()
 
-def update_currencies(request):
+def update_currencies(request: HttpRequest):
 	existing = Currency.objects.all()
 	result = update_currency_data(existing)
-	return redirect('converter:admin-currencies-list', new=result['added'], 
-													   updated=result['updated'], 
-												       removed=result['removed'])
+	return redirect('converter:admin-currencies-list')
