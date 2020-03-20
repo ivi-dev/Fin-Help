@@ -92,7 +92,8 @@ def process_currency_data(from_data_list: CurrencyDataList,
 	Currency.objects.bulk_create(new)
 	Currency.objects.bulk_update(update, ['name', 'code', 'per', 'rate'])
 	for code in remove:
-		Currency.objects.get(code=code).delete()
+		if code != Currency.base_code:
+			Currency.objects.get(code=code).delete()
 
 	return {'added': len(new), 
 			'updated': len(update), 
