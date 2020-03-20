@@ -2,21 +2,26 @@ from decimal import Decimal
 import datetime
 
 from django.db import models
+from django.utils.timezone import now
 from .utility.general import qs_find
 
 
 class Currency(models.Model):
+	precision = 5
+	
 	name = models.CharField(max_length=100)
 	code = models.CharField(max_length=3)
-	symbol = models.CharField(max_length=5, default='')
+	symbol = models.CharField(max_length=5, 
+							  default='')
 	per = models.IntegerField(default=1)
-	rate = models.DecimalField(max_digits=10, decimal_places=5)
-	date_valid = models.DateField(default=datetime.date.today())
+	rate = models.DecimalField(max_digits=10, 
+							   decimal_places=precision)
+	date_valid = models.DateField(default=now)
 
 	def __str__(self):
 		return f'{self.name} [{self.code}] | За единица валута: {self.per} | Курс към лев: {self.rate}'
 
-	def get_rate_to(self, code, list_=None, precision=5):
+	def get_rate_to(self, code, list_=None, precision=precision):
 		currency = None
 		if list_ is None:
 			currency = Currency.objects.only('per', 'rate') \
@@ -26,7 +31,7 @@ class Currency(models.Model):
 		result = self._convert(1, to=currency)
 		return round(result, precision)
 
-	def convert_to(self, code, amount, precision=5):
+	def convert_to(self, code, amount, precision=precision):
 		currency = Currency.objects.only('per', 'rate') \
 							       .get(code=code)
 		result = self._convert(amount, to=currency)
