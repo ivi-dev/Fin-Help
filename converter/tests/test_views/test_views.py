@@ -3,6 +3,7 @@ from django.test import Client
 import datetime
 from unittest.mock import patch
 from typing import Sequence, List, Mapping, Any
+from converter.tests.utility import *
 
 from converter.models import Currency
 
@@ -52,19 +53,16 @@ class TestViews(TestCase):
 		return template_names
 
 	def test_convert_view(self):
-		date_valid = datetime.date(2020, 3, 2)
-		currency1 = Currency(name='Currency 1',
-							 code='ABC',
-							 per=1,
-							 rate=12.12345,
-							 date_valid=date_valid)
-		currency1.save()
-		currency2 = Currency(name='Currency 2',
-							 code='DEF',
-							 per=1,
-							 rate=54.54321,
-							 date_valid=date_valid)
-		currency2.save()
+		currency1 = create_currency(name='Currency 1',
+								    code='ABC',
+								    per=1,
+								    rate=12.12345,
+								    date_valid=date_valid)
+		currency2 = create_currency(name='Currency 2',
+								    code='DEF',
+								    per=1,
+								    rate=54.54321,
+								    date_valid=date_valid)
 		client = Client()
 		response = client.get('/convert/?amount=2&from=ABC&to=DEF')
 		self._check_convert_view_response(response)
@@ -86,12 +84,11 @@ class TestViews(TestCase):
 	@patch('converter.utility.currency.update_currency_data')
 	def test_update_currencies_view(self, 
 								    mock_update_currency_data: MagicMock):
-		currency1 = Currency(name='Currency 1',
-							 code='ABC',
-							 per=1,
-							 rate=12.12345,
-							 date_valid=datetime.date(2020, 3, 2))
-		currency1.save()
+		currency1 = create_currency(name='Currency 1',
+								    code='ABC',
+								    per=1,
+								    rate=12.12345,
+								    date_valid=date_valid)
 		existing = Currency.objects.all()
 
 		client = Client()
