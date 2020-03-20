@@ -12,12 +12,11 @@ RAW_DATA_URL = 'https://www.bnb.bg/Statistics/StExternalSector/StExchangeRates/S
 DATA_ELEMENT_NAME = 'form'
 DATA_ELEMENT_ID = 'Exchange_Rate_Search'
 
-
-def update_currency_data(existing):
+def update_currency_data(existing_currencies):
 	raw = get_raw_data()
-	data = extract_currency_data(raw)
-	data_list = CurrencyDataList(data)
-	return process_currency_data(data_list, existing)
+	data_list = extract_currency_data(from_=raw)
+	return process_currency_data(from_data_list=data_list, 
+					             existing_currencies=existing_currencies)
 
 def get_raw_data():
 	response = requests.get(RAW_DATA_URL)
@@ -27,9 +26,9 @@ def get_raw_data():
 			            id=DATA_ELEMENT_ID)
 	return element
 
-def extract_currency_data(raw):
-	date_valid = get_validity_date(raw.find('h2').string)
-	rows = raw.table.tbody.find_all('tr')
+def extract_currency_data(from_):
+	date_valid = get_validity_date(from_.find('h2').string)
+	rows = from_.table.tbody.find_all('tr')
 	data = []
 	for row in rows:
 		cells = row.find_all('td')
@@ -39,24 +38,24 @@ def extract_currency_data(raw):
 									 cells[2].string,
 									 cells[3].string,
 									 date_valid))
-	return data
+	return CurrencyDataList(data)
 
 def get_validity_date(string):
 	date = re.findall(r'''\d{1,2}\.\d{1,2}\.\d{2,4}''', string)[0]
 	split = date.split('.')
 	return datetime.date(int(split[2]), int(split[1]), int(split[0]))
 
-def process_currency_data(data_list, existing):
-	new, update, removed = make_lists(data_list, existing)
+def process_currency_data(from_data_list, existing_currencies):
+	new, update, remove = make_lists(from_data_list, existing_currencies)
 
 	Currency.objects.bulk_create(new)
 	Currency.objects.bulk_update(update, ['name', 'code', 'per', 'rate'])
-	for code in removed:
+	for code in remove:
 		Currency.objects.get(code=code).delete()
 
 	return {'added': len(new), 
 			'updated': len(update), 
-			'removed': len(removed)}
+			'removed': len(remove)}
 
 def make_lists(data_list, existing):
 	new, updated, to_be_removed = [], [], []
@@ -85,7 +84,11 @@ def make_lists(data_list, existing):
 	return (new, updated, to_be_removed)
 
 class CurrencyData:
-	def __init__(self, name, code, per, rate, date_valid):
+	def __init__(self, name, 
+					   code, 
+				       per, 
+				       rate, 
+				       date_valid):
 		self.name = name
 		self.code = code
 		self.per = per
