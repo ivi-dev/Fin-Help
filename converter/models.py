@@ -23,7 +23,9 @@ class Currency(models.Model):
 	date_valid = models.DateField(default=now)
 
 	def __str__(self):
-		return f'[{self.code}] {self.name} | За единица валута: {self.per} | Курс към лев: {self.rate}'
+		return f'[{self.code}] {self.name} | '\
+			   f'За единица валута: {self.per} | '\
+			   f'Курс към лев: {self.rate}'
 
 	def get_rate_to(self, 
 				    code: str, 
