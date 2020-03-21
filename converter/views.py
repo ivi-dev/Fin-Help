@@ -4,7 +4,6 @@ import json
 import datetime
 
 from .models import Currency
-from .utility.general import qs_find
 from .utility.currency import update_currency_data
 
 
