@@ -44,14 +44,6 @@ class CurrencyDataList:
 	def __iter__(self):
 		return iter(self._list)
 
-	def __next__(self):
-		if self._index == len(self._list) - 1:
-			raise StopIteration()
-		else:
-			currency_data = self._list[self._index]
-			self._index += 1
-			return currency_data
-
 def update_currency_data(existing_currencies: QuerySet) -> Mapping[str, int]:
 	raw_data = get_raw_data()
 	data_list = extract_currency_data(from_=raw_data)

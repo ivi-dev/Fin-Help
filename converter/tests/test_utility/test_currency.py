@@ -30,12 +30,15 @@ class TestCurrencyUtility(TestCase):
 	def test_update_currency_data(self, mock_get: MagicMock) -> None:
 		mock_get.return_value = MockResponse()
 
-		currency1 = create_currency(name='Currency 1',
-									code='ABC',
-									rate=12.12345)
-		_ = create_currency(name='Currency 2',
-							code='DEF',
-							rate=54.54321)
+		currency = create_currency(name='Currency 1',
+								   code='ABC',
+								   rate=12.12345)
+		create_currency(name='Currency 2',
+						code='DEF',
+						rate=54.54321)
+		base_currency = create_currency(name='Currency 4',
+										code=Currency.base_code,
+										rate=54.54321)
 		currencies = Currency.objects.all()
 
 		update_currency_data(existing_currencies=currencies)
@@ -52,13 +55,18 @@ class TestCurrencyUtility(TestCase):
 										     date_valid_components=self.date_valid_components)
 		self.assertTrue(updated_is_valid)
 
-		self._check_currency_not_exists(currency1)
+		self.assertFalse(self._currency_exists(currency))
+
+		self.assertTrue(self._currency_exists(base_currency))
 
 		Currency.objects.all().delete()
 
-	def _check_currency_not_exists(self, currency: Currency) -> None:
-		self.assertRaises(Currency.DoesNotExist, 
-					      lambda: Currency.objects.get(code=currency.code))
+	def _currency_exists(self, currency: Currency) -> bool:
+		try:
+			Currency.objects.get(code=currency.code)
+		except:
+			return False
+		return True
 
 	def test_currency_data_object_gets_created_correctly(self) -> None:
 		date_valid = datetime.date(2020, 3, 10)
@@ -138,6 +146,9 @@ class MockResponse:
                                     <td class="right">{TestCurrencyUtility.currency_data2['per']}</td>
                                     <td class="center">{TestCurrencyUtility.currency_data2['rate']}</td>
                                     <td class="last center">0.930449</td>
+                                </tr>
+                                <tr class="first">
+                                    <td class="first"></td>
                                 </tr>
                             </tbody>
 	                    </table>

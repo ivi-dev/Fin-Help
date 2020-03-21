@@ -7,7 +7,7 @@ from .models import Currency
 from .utility.currency import update_currency_data
 
 
-def index(request: HttpRequest):
+def index(request: HttpRequest) -> None: # pragma: no cover
 	currencies = Currency.objects.all()
 	from_currency = currencies.first()
 	to_currency = from_currency
@@ -24,7 +24,7 @@ def index(request: HttpRequest):
 	}
 	return render(request, 'converter/index.html', context)
 
-def convert(request: HttpRequest):
+def convert(request: HttpRequest) -> None: # pragma: no cover
 	amount = request.GET['amount']
 	from_code = request.GET['from']
 	from_currency = Currency.objects.get(code=from_code)
@@ -44,10 +44,10 @@ def convert(request: HttpRequest):
 				         	'to_currency_symbol': to_currency.symbol
 				        }})
 
-def admin_currencies_list(request: HttpRequest):
+def admin_currencies_list(request: HttpRequest) -> None: # pragma: no cover
 	return HttpResponse()
 
-def update_currencies(request: HttpRequest):
+def update_currencies(request: HttpRequest) -> None: # pragma: no cover
 	existing = Currency.objects.all()
 	result = update_currency_data(existing)
 	return redirect('converter:admin-currencies-list')

@@ -21,14 +21,11 @@ def create_currency(**kwargs) -> QuerySet:
 		'rate': rate,
 		'date_valid': date_valid
 	}
-	if kwargs is not None:
+	if len(kwargs) > 0:
 		for key in kwargs:
 			fields[key] = kwargs[key]
 	Currency.objects.create(**fields)
-	code_ = code
-	if 'code' in fields:
-		code_ = fields['code']
-	return Currency.objects.get(code=code_)
+	return Currency.objects.get(code=fields['code'])
 
 def is_currency_valid(currency: Currency,
 			          reference: Mapping[str, Any], 
