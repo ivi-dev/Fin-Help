@@ -6,7 +6,7 @@ from converter.tests.utility import *
 
 
 class TestGeneralUtility(TestCase):
-	def test_qs_finds_and_item_by_a_filter(self):
+	def test_qs_finds_and_item_by_a_filter(self) -> None:
 		currency1 = create_currency(name='Currency 1',
 								    code='ABC',
 								    per=1,

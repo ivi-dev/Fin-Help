@@ -9,14 +9,8 @@ from converter.models import Currency
 
 
 class TestViews(TestCase):
-	def test_index_view(self):
-		date_valid = datetime.date(2020, 3, 2)
-		currency1 = Currency(name='Currency 1',
-							 code='ABC',
-							 per=1,
-							 rate=12.12345,
-							 date_valid=date_valid)
-		currency1.save()
+	def test_index_view(self) -> None:
+		currency1 = create_currency()
 		currencies = Currency.objects.all()
 
 		client = Client()
@@ -24,6 +18,7 @@ class TestViews(TestCase):
 
 		self._check_index_view_context(response.context, currencies, currency1)
 		self._check_index_view_template(response.templates)
+		Currency.objects.all().delete()
 
 	def _check_index_view_context(self, 
 								  context: Mapping[str, Any], 
@@ -42,30 +37,26 @@ class TestViews(TestCase):
 
 	def _check_index_view_template(self, 
 								   templates: Sequence[Templates]) -> None:
-		template_list = self.get_template_names(templates)
+		template_list = self._get_template_names(templates)
 		self.assertTrue('converter/index.html' in template_list)
 
-	def get_template_names(self, 
+	def _get_template_names(self, 
 						   template_list: Sequence[Template]) -> List[str]:
 		template_names = []
 		for template in template_list:
 			template_names.append(template.name)
 		return template_names
 
-	def test_convert_view(self):
-		currency1 = create_currency(name='Currency 1',
-								    code='ABC',
-								    per=1,
-								    rate=12.12345,
-								    date_valid=date_valid)
+	def test_convert_view(self) -> None:
+		currency1 = create_currency()
 		currency2 = create_currency(name='Currency 2',
 								    code='DEF',
-								    per=1,
-								    rate=54.54321,
-								    date_valid=date_valid)
+								    rate=54.54321)
 		client = Client()
 		response = client.get('/convert/?amount=2&from=ABC&to=DEF')
+
 		self._check_convert_view_response(response)
+		Currency.objects.all().delete()
 
 	def _check_convert_view_response(self, response: Response) -> None:
 		decoded = response.json()
@@ -76,14 +67,14 @@ class TestViews(TestCase):
 		self.assertEqual(decoded['rate_info']['amount'], '2')
 		self.assertEqual(decoded['rate_info']['rate'], '0.22227')
 
-	def test_admin_currencies_list_view(self):
+	def test_admin_currencies_list_view(self) -> None:
 		client = Client()
 		response = client.get('/admin/converter/currency/')
 		self.assertEqual(response.status_code, 302)
 
 	@patch('converter.utility.currency.update_currency_data')
 	def test_update_currencies_view(self, 
-								    mock_update_currency_data: MagicMock):
+								    mock_update_currency_data: MagicMock) -> None:
 		currency1 = create_currency(name='Currency 1',
 								    code='ABC',
 								    per=1,

@@ -90,7 +90,7 @@ def process_currency_data(from_data_list: CurrencyDataList,
 	new, update, remove = make_lists(from_data_list, existing_currencies)
 
 	Currency.objects.bulk_create(new)
-	Currency.objects.bulk_update(update, ['name', 'code', 'per', 'rate'])
+	Currency.objects.bulk_update(update, ['name', 'code', 'per', 'rate', 'date_valid'])
 	for code in remove:
 		if code != Currency.base_code:
 			Currency.objects.get(code=code).delete()
