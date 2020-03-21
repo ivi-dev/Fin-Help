@@ -1,0 +1,22 @@
+[run]
+branch = True
+source = 
+	converter\
+	converter\tests\
+	converter\utility\
+omit = 
+	converter\migrations\*
+	converter\static\*
+	converter\templates\*
+	converter\tests\__init__.py
+	converter\tests\test_models\*
+	converter\tests\test_utility\*
+	converter\tests\test_views\*
+	converter\tests\test_utility_.py
+	converter\__init__.py
+	converter\admin.py
+	converter\apps.py
+	converter\urls.py
+	
+[report]
+show_missing = True
