@@ -32,7 +32,7 @@ def convert(request: HttpRequest) -> None: # pragma: no cover
 	to_currency = Currency.objects.get(code=to_code)
 	rate = from_currency.get_rate_to(to_code)
 
-	result = from_currency.convert_to(to_code, amount, precision=5)
+	result = from_currency.convert_to(to_code, amount, precision=2)
 
 	return JsonResponse({'result': str(result), 
 				         'rate_info': {
@@ -51,3 +51,8 @@ def update_currencies(request: HttpRequest) -> None: # pragma: no cover
 	existing = Currency.objects.all()
 	result = update_currency_data(existing)
 	return redirect('converter:admin-currencies-list')
+
+def tests(request, test_path) -> None:
+	path = test_path.replace('-', '/')
+	print(path)
+	return render(request, f'converter/tests/{path}.html')
