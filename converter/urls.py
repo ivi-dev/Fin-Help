@@ -10,4 +10,6 @@ urlpatterns = [
 	     name='update_currencies'),
     path('admin/converter/currency/', views.admin_currencies_list, 
     	 name='admin-currencies-list'),
+
+    path('tests/<str:test_path>/', views.tests, name='qunit-tests')
 ]
