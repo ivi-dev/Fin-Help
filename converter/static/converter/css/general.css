@@ -32,7 +32,7 @@ body {
 }
 
 #alert-box i {
-	right: 25px;
+	right: 15px;
 	top: 42%;
 	cursor: pointer;
 	color: rgba(0, 0, 0, 0.5);
