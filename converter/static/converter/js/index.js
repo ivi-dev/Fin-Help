@@ -1,21 +1,19 @@
 $.when($.ready).then(function() {
-	CONVERT_FORM.children('button#convert').on('click', function() {
+	CONVERT_BUTTON.on('click', function() {
 		hideAlert();
-		const amount = getValue(CONVERT_FORM.children(AMOUNT_FIELD_SELECTOR));
+		const amount = getValue(AMOUNT_FIELD);
 		if (amount != 0) {
-			const button = $(this), title = getValue(button);
-			deactivateButton(button, 'КАЛКУЛИРАМ...');
+			const button = $(this);
+			deactivateButton(button, CONVERT_BUTTON_BUSY_TITLE);
 			convert($(CONVERT_FORM));
-		} else {
-			handleZeroAmountError(amount);
 		}
 	});
 
-	CONVERT_FORM.children('button#flip').on('click', function() {
-		const fromValue = getValue(CONVERT_FORM.children(FROM_FIELD_SELECTOR));
-		const toValue = getValue(CONVERT_FORM.children(TO_FIELD_SELECTOR));
-		setValue(CONVERT_FORM.children(FROM_FIELD_SELECTOR), toValue);
-		setValue(CONVERT_FORM.children(TO_FIELD_SELECTOR), fromValue);
+	FLIP_BUTTON.on('click', function() {
+		const fromValue = getValue(FROM_FIELD);
+		const toValue = getValue(TO_FIELD);
+		setValue(FROM_FIELD, toValue);
+		setValue(TO_FIELD, fromValue);
 	});
 
 	ALERT_BOX.children('.hide').on('click', function() {
