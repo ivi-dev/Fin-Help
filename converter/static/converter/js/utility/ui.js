@@ -66,22 +66,17 @@ function getElementName(element) {
 	return name;
 }
 
-function getPreConversionData(form) {
-	let data;
-  	if (isObject(form)) {
-  		data = extractDataFromForm(form);
-	} else if (isString(form)) {
-  		data = extractDataFromForm($(form));
-	}
+function getPreConversionData() {
+	let data = extractDataFromForm();
 	checkConversionData(data);
 	return data;
 }
 
-function extractDataFromForm(form) {
+function extractDataFromForm() {
 	const data = {
-		amount: form.children(AMOUNT_FIELD_SELECTOR).val(), 
-	    from: form.children(FROM_FIELD_SELECTOR).val(), 
-	    to: form.children(TO_FIELD_SELECTOR).val()
+		amount: getValue(AMOUNT_FIELD), 
+	    from: getValue(FROM_FIELD), 
+	    to: getValue(TO_FIELD)
 	};
 	return data;
 }
@@ -95,7 +90,7 @@ function hideAlert() {
 	ALERT_BOX.addClass('hidden');
 }
 
-function updateUIAfterConversion(data) {
+function updateUI(data) {
 	setValue($('#info #conversion-result-value'), 
 			 data.result);
 	setValue($('#info #amount-value'), 
@@ -104,7 +99,7 @@ function updateUIAfterConversion(data) {
 			 data.rate_info.from_currency_name);
 	setValue($('#info .from-symbol'), 
 			 data.rate_info.from_currency_symbol);
-	setValue($('#info .rate-value'), 
+	setValue($('#info .rate'), 
 			 data.rate_info.rate);
 	setValue($('#info .to-name'), 
 			 data.rate_info.to_currency_name);
