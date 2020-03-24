@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.9.2.css">
+</head>
+<body>
+	<div id="alert-box"
+	 class="row no-gutters position-fixed bg-light align-items-center hidden"
+	 style="display: none;">
+	 	<div class="text-area bg-blue text-light p-4"></div>
+	 	<i class="hide far fa-circle position-absolute"></i>
+	</div>
+	
+	<form id="convert-form" 
+	  class="col-7 position-relative ml-5"
+	  style="display: none;">
+		<label for="amount" 
+			   class="row no-gutters col-12">
+			Сума
+		</label>
+		<input type="number" 
+				id="amount" 
+				class="row no-gutters col-12" 
+				value="1"
+				min=0>
+
+		<label for="from" 
+				class="row no-gutters col-12">
+			От
+		</label>
+		<select id="from" 
+				class="row no-gutters col-12" 
+				value="ABC">
+			<option value="ABC" selected>ABC Currency 1</option>
+			<option value="DEF" selected>DEF Currency 2</option>
+		</select>
+		
+		<button id="flip" 
+				type="button"
+				class="button position-absolute" 
+				title="Размени местата">
+			<i class="fas fa-exchange-alt"></i>
+		</button>
+
+		<label for="to" 
+			   class="row no-gutters col-12">
+			Към
+		</label>
+		<select id="to" 
+				class="row no-gutters col-12"
+				value="DEF">
+			<option value="DEF" selected>DEF Currency 2</option>
+		</select>
+
+		<button id="convert" 
+				type="button"
+			   	class="button col-12">
+			   КАЛКУЛИРАЙ СЕГА
+		</button>
+	</form>
+
+	<div id="info"
+		 style="display: none;">
+		<div id="conversion-result-value"></div>
+		<div id="amount-value"></div>
+		<div class="from-name"></div>
+		<div class="from-symbol"></div>
+		<div class="rate"></div>
+		<div class="to-name"></div>
+		<div class="to-symbol"></div>
+	</div>
+
+	<div id="qunit"></div>
+  	<div id="qunit-fixture"></div>
+  	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+	  	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+	  	crossorigin="anonymous"></script>
+  	<script type="text/javascript" 
+  			src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mockjax/1.6.2/jquery.mockjax.min.js"></script>
+  	<script src="https://code.jquery.com/qunit/qunit-2.9.2.js"></script>
+	<script type="text/javascript" src="{% static 'converter/js/tests/utility/jsHemcrest.js' %}"></script>
+	<script type="text/javascript" src="{% static 'converter/js/tests/utility/mockAjax.js' %}"></script>
+  	<script type="text/javascript" src="{% static 'converter/js/exceptions/IncompleteConversionDataError.js' %}"></script>
+  	<script type="text/javascript" src="{% static 'converter/js/exceptions/InvalidElementError.js' %}"></script>
+  	<script type="text/javascript" src="{% static 'converter/js/constants.js' %}"></script>
+  	<script type="text/javascript" src="{% static 'converter/js/utility/common.js' %}"></script>
+  	<script type="text/javascript" src="{% static 'converter/js/utility/ui.js' %}"></script>
+  	<script type="text/javascript" src="{% static 'converter/js/tests/test_utility/test_ui.js' %}"></script>
+</body>
+</html>
