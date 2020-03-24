@@ -46,9 +46,9 @@ function convert() {
 						   CONVERT_BUTTON_ORIGINAL_TITLE);
 		});
 	} catch (e) {
-		handleConversionError();
+		handleConversionError(e);
 	} finally {
-		activateButton($(CONVERT_BUTTON), 
+		activateButton(CONVERT_BUTTON, 
 				       CONVERT_BUTTON_ORIGINAL_TITLE);
 	}
 }
@@ -56,7 +56,8 @@ function convert() {
 function handleNetworkError(status) {
 	if (status === 404) {
 		alert('Адресът на системната ' + 
-		      `заявка не може да бъде намерен. Код на грешката: ${status}`);
+		      `заявка не може да бъде намерен. ` +
+		      `Код на грешката: ${status}`);
 	} else if (status === 500) {
 		alert('По неизвестна причина, ' +
 		      'системата не успя да обработи ' + 
@@ -70,6 +71,6 @@ function handleNetworkError(status) {
 function handleConversionError(e) {
 	if (e instanceof IncompleteConversionDataError) {
 		alert('Калкулацията е прекратена, тъй като ' +
-			  'липсват някои неодходими данни за нея.');
+			  'липсват някои необходими данни за нея.');
 	}
 }
