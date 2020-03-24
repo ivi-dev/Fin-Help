@@ -34,9 +34,11 @@ function getElementText(element) {
 			'argument doesn\'t seem to be a valid jQuery element.');
 	} else if (elementName === 'INPUT' ||
 	 	   	   elementName === 'SELECT') {
-		return element.val().trim();
+		const value = element.val();
+		return value ? value.trim() : '';
 	} else {
-		return element.text().trim();
+		const text = element.text();
+		return text ? text.trim() : '';
 	}
 }
 
