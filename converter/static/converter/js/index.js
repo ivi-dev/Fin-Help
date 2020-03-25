@@ -22,6 +22,6 @@ $.when($.ready).then(function() {
 
 	VIEW_CURRENCIES_BUTTON.on('click', function() {
 		CURRENCIES_LIST.toggleClass('hidden');
-		$(this).children('i').toggleClass('fa-times');
+		VIEW_CURRENCIES_BUTTON.children('i').toggleClass('fa-times');
 	});
 });
