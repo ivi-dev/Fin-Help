@@ -1,19 +1,6 @@
 JsHamcrest.Integration.copyMembers(this);
 MockAjax.Integration.jQuery();
-const convert_response = {
-result: 1,
-	rate_info: {
-		amount: 1,
-		from_currency_name: "Currency 1",
-		from_currency_symbol: "ABC",
-		rate: 12.12345,
-		to_currency_name: "Currency 2",
-		to_currency_symbol: "DEF"
-	}
-};
 const INITIAL_FROM_VALUE = getValue(FROM_FIELD);
-const data = getPreConversionData();
-const CONVERT_URL = `convert/?amount=${data.amount}&from=${data.from}&to=${data.to}`;
 
 function postConversionUIIsCorrect(assert, response) {
 	assert.equal(getValue($('#info #conversion-result-value')), 
@@ -99,12 +86,12 @@ QUnit.test('getConversionDataEntriesAsString() returns the ' +
 QUnit.test('a successful request from convert() is handled', 
 	function(assert) {
 		MockAjax.whenRequest({url: is(CONVERT_URL)})
-			    .thenRespond({data: JSON.stringify(convert_response)});
+			    .thenRespond({data: JSON.stringify(CONVERT_RESPONSE)});
 
 		convert();
 		MockAjax.respond();
 
-		const result = postConversionUIIsCorrect(assert, convert_response);
+		const result = postConversionUIIsCorrect(assert, CONVERT_RESPONSE);
 		assert.ok(result);
 });
 
@@ -168,7 +155,7 @@ QUnit.test('the title of the convert button is restored after ' +
 		   'a successful request from convert()', 
 	function(assert) {
 		MockAjax.whenRequest({url: is(CONVERT_URL)})
-			    .thenRespond({data: JSON.stringify(convert_response)});
+			    .thenRespond({data: JSON.stringify(CONVERT_RESPONSE)});
 
 		convert();
 		MockAjax.respond();
