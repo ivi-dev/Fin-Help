@@ -5,7 +5,7 @@ FinHelp is a web based currency converter. It allows you to:
 
 The application autmatically updates its conversion rate information on a daily basis and presents a user-editable table with all supported currencies so that currency names and rates can be edited manually at any time.
 
-# Run the app in evelopment mode
+# Run the app in development mode
 There are just a few things you need to do to run FinHelp in development mode:
 
 1. Make sure you have [Python](https://www.python.org/downloads/) and [Django](https://www.djangoproject.com/download/) installed. 
